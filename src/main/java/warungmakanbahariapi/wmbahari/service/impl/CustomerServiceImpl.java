@@ -55,6 +55,7 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public CustomerResponse findById(String customer) {
         Optional<Customer> byId = customerRepository.findById(customer);
         if (byId.isEmpty()) throw new ResponseStatusException(HttpStatus.NOT_FOUND,"User Not Found");
@@ -66,11 +67,13 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public List<Customer> getAll() {
         return customerRepository.findAll();
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public CustomerResponse updateCustomer(CustomerRequest customer) {
         Optional<Customer> byId = customerRepository.findById(customer.getName());
         if (byId.isEmpty()) throw new ResponseStatusException(HttpStatus.NOT_FOUND,"User Not Found");

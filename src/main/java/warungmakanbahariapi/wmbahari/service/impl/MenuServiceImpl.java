@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 import warungmakanbahariapi.wmbahari.entity.Menu;
 import warungmakanbahariapi.wmbahari.model.request.MenuRequest;
@@ -24,6 +25,7 @@ public class MenuServiceImpl implements MenuService {
     private final MenuRepository menuRepository;
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public MenuResponse create(MenuRequest request) {
 
         MenuRequest menuRequest = MenuRequest.builder()
@@ -45,6 +47,7 @@ public class MenuServiceImpl implements MenuService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public MenuResponse getById(MenuRequest request) {
         Optional<Menu> byId = menuRepository.findById(request.getName());
         if (byId.isEmpty()) throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Menu Not Found");
@@ -56,6 +59,7 @@ public class MenuServiceImpl implements MenuService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public MenuResponse updateById(MenuRequest request) {
         Optional<Menu> byId = menuRepository.findById(request.getName());
         if (byId.isEmpty()) throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Menu Not Found");
@@ -75,6 +79,7 @@ public class MenuServiceImpl implements MenuService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public MenuResponse deleteById(MenuRequest request) {
         menuRepository.deleteById(request.getName());
 
@@ -85,6 +90,7 @@ public class MenuServiceImpl implements MenuService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public List<Menu> getAll(MenumixmaxRequest request) {
         Specification<Menu> productSpecification = getProductSpecification(request);
 

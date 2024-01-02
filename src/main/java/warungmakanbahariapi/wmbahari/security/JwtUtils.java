@@ -29,11 +29,11 @@ import java.util.List;
 @Slf4j
 public class JwtUtils {
 
-    @Value("${app.tokopakedi.jwt-secret}")
+    @Value("${app.wm-bahari.jwt-secret}")
     private String secretKey;
-    @Value("${app.tokopakedi.jwt-expirationInSecond}")
+    @Value("${app.wm-bahari.jwt-expirationInSecond}")
     private Long expirationInSecond;
-    @Value("${app.tokopakedi.app-name}")
+    @Value("${app.wm-bahari.app-name}")
     private String appName;
 
     public String generateToken(User user){
@@ -73,7 +73,7 @@ public class JwtUtils {
             JWTVerifier verifier = JWT.require(algorithm).build();
             DecodedJWT decodedJWT = verifier.verify(token);
 
-            List<String> roles = decodedJWT.getClaim("roles").asList(String.class);
+            List<String> roles = decodedJWT.getClaim("role").asList(String.class);
 
             return JwtClaim.builder()
                     .userId(decodedJWT.getSubject())

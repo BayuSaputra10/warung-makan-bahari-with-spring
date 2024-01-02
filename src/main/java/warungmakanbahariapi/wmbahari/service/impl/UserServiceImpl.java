@@ -3,6 +3,7 @@ package warungmakanbahariapi.wmbahari.service.impl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 import warungmakanbahariapi.wmbahari.entity.Customer;
 import warungmakanbahariapi.wmbahari.entity.User;
@@ -23,6 +24,7 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public UserResponse create(UserRequest request) {
 
         User user = User.builder()
@@ -39,6 +41,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public UserResponse deleteById(String id) {
         Optional<User> byId = userRepository.findById(id);
         if (byId.isEmpty()) throw new ResponseStatusException(HttpStatus.NOT_FOUND,"User Not Found");
@@ -50,6 +53,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public UserResponse findById(String UserResponse) {
         Optional<User> byId = userRepository.findById(UserResponse);
         if (byId.isEmpty()) throw new ResponseStatusException(HttpStatus.NOT_FOUND,"User Not Found");
@@ -61,11 +65,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public List<User> getAll() {
         return userRepository.findAll();
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public UserResponse update(UserRequest request) {
         Optional<User> byId = userRepository.findById(request.getName());
         if (byId.isEmpty()) throw new ResponseStatusException(HttpStatus.NOT_FOUND,"User Not Found");
@@ -83,6 +89,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public User loadByUSerId(String userId) {
             return userRepository.findById(userId).orElseThrow(() ->
                     new ResponseStatusException(HttpStatus.UNAUTHORIZED,"unauthorized"));
