@@ -1,6 +1,7 @@
 package warungmakanbahariapi.wmbahari.entity;
 
 import jakarta.persistence.*;
+import jakarta.persistence.Table;
 import lombok.*;
 
 @Setter
@@ -9,6 +10,7 @@ import lombok.*;
 @AllArgsConstructor
 @Entity
 @Builder
+@Table(name = "m_role")
 public class UserRole {
 
     @Id
